@@ -1,13 +1,9 @@
-"use client";
-import Home from "./views/home/page";
+import LandingPage from "./views/landingPage/page";
 
-
-export default function Page() {
-
-
+export default function Home() {
   return (
-    < >
-      <Home />
-    </>
+    <div >
+      <LandingPage/>
+    </div>
   );
 }
