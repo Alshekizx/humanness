@@ -11,7 +11,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        primary: "#333333", // Dark Gray
+        primary: "#111827", // Dark Gray
         secondary: "#F8F8F8", // Off White
         accent: "#FF0000", // Red
       },
@@ -24,6 +24,11 @@ export default {
         h6: "16px",
         body: "14px",
         small: "12px",
+      },
+      zIndex: {
+        100: "100",
+        500: "500",
+        1000: "1000",
       },
     },
   },

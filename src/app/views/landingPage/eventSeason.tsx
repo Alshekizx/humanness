@@ -15,10 +15,13 @@ const EventSeason = () => {
     }
   };
 
+  // Filter out only items where isNew is false and limit to 10 items
+  const filteredItems = newArrivalItems.filter((item) => !item.isNew).slice(0, 10);
+
   return (
-    <div className="relative flex flex-col p-4 gap-6">
+    <div className="relative flex flex-col py-4 gap-6">
       {/* Header Section */}
-      <div className="flex justify-between items-center">
+      <div className="flex px-4 justify-between items-center">
         <div>
           <p className="">Humanness Program</p>
           <h1 className="">Event Season</h1>
@@ -31,7 +34,7 @@ const EventSeason = () => {
       </div>
 
       {/* Scroll Buttons */}
-      <div className="hidden lg:flex items-center absolute gap-20 top-20 right-20 z-10">
+      <div className=" lg:hidden flex items-center absolute gap-20 top-24 right-6 z-10">
         <button className="text-primary" onClick={() => scroll("left")}>
           <ChevronLeftIcon className="w-5 h-5" />
         </button>
@@ -42,9 +45,9 @@ const EventSeason = () => {
 
       {/* Product Grid */}
       <div className="relative w-full">
-        <div className="overflow-x-auto scrollbar-hide pt-4" id="cardContainer">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 w-full">
-            {newArrivalItems.map((item, index) => (
+        <div className="overflow-x-auto scrollbar-hide pt-4 lg:overflow-visible" id="cardContainer">
+          <div className="flex lg:grid lg:grid-cols-5 gap-2 w-fit">
+            {filteredItems.map((item, index) => (
               <Cloth2ndCard key={index} {...item} />
             ))}
           </div>

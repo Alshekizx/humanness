@@ -7,9 +7,10 @@ import { newArrivalItems } from "@/page/api/data";
 const NewArrival = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
-  const filteredItems = selectedCategory === "All"
-    ? newArrivalItems
-    : newArrivalItems.filter(item => item.category === selectedCategory);
+  // Filter only items that are new and match the selected category
+  const filteredItems = newArrivalItems.filter(
+    (item) => item.isNew && (selectedCategory === "All" || item.category === selectedCategory)
+  );
 
   // Handle scrolling through the cards
   const scroll = (direction: string) => {
@@ -24,6 +25,7 @@ const NewArrival = () => {
     <div className="relative flex flex-col gap-6">
       <h1 className="text-center">New Arrivals</h1>
 
+      {/* Category Filter Buttons */}
       <div className="flex flex-wrap justify-start lg:justify-center space-x-4 px-4">
         {["All", "Hoodies", "Tops", "Bottoms", "Accessories"].map((cat) => (
           <button
@@ -38,27 +40,20 @@ const NewArrival = () => {
         ))}
       </div>
 
+      {/* Scroll Buttons */}
       <div className="hidden lg:flex items-center absolute gap-20 top-20 right-20 z-10">
-          <button
-            className="text-primary "
-            onClick={() => scroll("left")}
-          >
-            <ChevronLeftIcon className="w-5 h-5" />
-          </button>
-          <button
-            className="text-primary "
-            onClick={() => scroll("right")}
-          >
-            <ChevronRightIcon className="w-5 h-5" />
-          </button>
-        </div>
+        <button className="text-primary" onClick={() => scroll("left")}>
+          <ChevronLeftIcon className="w-5 h-5" />
+        </button>
+        <button className="text-primary" onClick={() => scroll("right")}>
+          <ChevronRightIcon className="w-5 h-5" />
+        </button>
+      </div>
 
-      {/* Scrollable container with left and right arrows */}
+      {/* Scrollable container with product cards */}
       <div className="relative w-full">
-      <div
-          className="w-full overflow-x-auto pt-4 scrollbar-hide"
-          id="cardContainer">
-          <div className="flex w-fit">
+        <div className="w-full overflow-x-auto pt-4 scrollbar-hide" id="cardContainer">
+          <div className="flex w-fit gap-2">
             {filteredItems.map((item, index) => (
               <ClothCard key={index} {...item} />
             ))}

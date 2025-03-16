@@ -4,12 +4,28 @@ import Image from "next/image";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { ClothCardProps } from "@/page/api/data";
+import { useRouter } from "next/navigation";
 
 const ClothCard: React.FC<ClothCardProps> = ({ name, price, image, colors, link, isNew = false, category }) => {
   const [newCollection,] = useState(isNew);
+  const router = useRouter();
+
+  const handleClick = () => {
+    const productData = {
+      id: name,
+      price,
+      image,
+      category: JSON.stringify(category), // Convert category array to string
+      colors: JSON.stringify(colors),
+    };
+
+    const queryString = new URLSearchParams(productData).toString();
+    router.push(`/views/${name}?${queryString}`);
+  };
+
 
   return (
-    <div className="w-[180px] sm:w-[250px] md:w-[300px] lg:w-[350px]  h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] xl:h-[650px] overflow-hidden">
+    <button onClick={handleClick} className="w-[180px] sm:w-[250px] md:w-[300px] lg:w-[350px]  h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] xl:h-[650px] overflow-hidden">
       {/* Image Section */}
       <div className="relative w-full h-[75%] sm:h-[80%]">
         <Image src={image} alt={name} fill className="object-cover" />
@@ -45,15 +61,30 @@ const ClothCard: React.FC<ClothCardProps> = ({ name, price, image, colors, link,
           <ShoppingCartIcon className="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6 p-1 border border-gray-700 rounded-sm text-gray-700 hover:text-gray-900 transition-colors duration-300 cursor-pointer" />
         </Link>
       </div>
-    </div>
+    </button>
   );
 };
 
 const Cloth2ndCard: React.FC<ClothCardProps> = ({ name, price, image, colors, link, isNew = false, category }) => {
-  const [newCollection,] = useState(isNew);
+  const [newCollection] = useState(isNew);
+
+  const router = useRouter();
+
+  const handleClick = () => {
+    const productData = {
+      id: name,
+      price,
+      image,
+      category: JSON.stringify(category), // Convert category array to string
+      colors: JSON.stringify(colors),
+    };
+    
+    const queryString = new URLSearchParams(productData).toString();
+    router.push(`/views/${name}?${queryString}`);
+  };
 
   return (
-    <div className=" w-[250px] lg:w-full  h-[450px] md:h-[500px] lg:h-[550px] xl:h-[600px] overflow-hidden">
+    <button onClick={handleClick} className="flex-grow min-w-[200px] max-w-[300px] sm:min-w-[220px] sm:max-w-[350px] md:min-w-[250px] md:max-w-[400px] lg:w-1/5 xl:w-1/6 h-[450px] sm:h-[500px] md:h-[550px] xl:h-[600px] overflow-hidden">
       {/* Image Section */}
       <div className="relative w-full h-[75%] sm:h-[80%]">
         <Image src={image} alt={name} fill className="object-cover" />
@@ -73,7 +104,7 @@ const Cloth2ndCard: React.FC<ClothCardProps> = ({ name, price, image, colors, li
           <p className="text-gray-600 text-xs sm:text-sm md:text-base">{price}</p>
           <p className="hidden text-xs text-gray-500 capitalize">{category}</p>
           {/* Colors */}
-          <div className="flex gap-1 ">
+          <div className="flex gap-1">
             {colors.map((color, index) => (
               <div
                 key={index}
@@ -89,7 +120,7 @@ const Cloth2ndCard: React.FC<ClothCardProps> = ({ name, price, image, colors, li
           <ShoppingCartIcon className="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6 p-1 border border-gray-700 rounded-sm text-gray-700 hover:text-gray-900 transition-colors duration-300 cursor-pointer" />
         </Link>
       </div>
-    </div>
+    </button>
   );
 };
 

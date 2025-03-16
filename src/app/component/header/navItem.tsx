@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 
 export const navItems = [
   {
@@ -47,6 +48,7 @@ export const navItems = [
 ];
 
 const NavComponent = () => {
+  const router = useRouter();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openMobileSubMenu, setOpenMobileSubMenu] = useState<string | null>(null);
@@ -61,6 +63,11 @@ const NavComponent = () => {
 
   const toggleMobileSubMenu = (title: string) => {
     setOpenMobileSubMenu(openMobileSubMenu === title ? null : title);
+  };
+
+  const handleNavigation = (category: string) => {
+    const formattedCategory = category.toLowerCase().replace(/\s+/g, "-");
+    router.push(`/views/otherPage?category=${formattedCategory}`);
   };
 
   useEffect(() => {
@@ -152,8 +159,8 @@ const NavComponent = () => {
             <h2 className="text-xl font-semibold p-6 border-b-2 border-b-gray-700">{activeMenu}</h2>
             <div className="overflow-y-auto pb-40 h-[80vh]">
             <div className="flex flex-col p-6 space-y-2">
-              {navItems.find((item) => item.title === activeMenu)?.links.map((link, index) => (
-                <p key={index} className="text-gray-700 hover:underline cursor-pointer">{link}</p>
+                {navItems.find((item) => item.title === activeMenu)?.links.map((link, index) => (
+                    <p  key={index} onClick={() => handleNavigation(link)} className="text-gray-700 hover:underline cursor-pointer">{link}</p>
               ))}
             </div>
             <div className="mt-6 w-full h-[250px] overflow-hidden flex justify-center items-center">
